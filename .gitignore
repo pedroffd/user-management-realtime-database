@@ -10,6 +10,12 @@ pnpm-lock.yaml
 # dependencies
 /node_modules
 serviceAccount.json
+# Firebase credentials and sensitive files
+*firebase*.json
+*service-account*.json
+*adminsdk*.json
+*credentials*.json
+*private-key*.json
 .pnp.*
 .yarn/*
 !.yarn/patches
