@@ -111,9 +111,7 @@ export function UserList() {
     <div className='space-y-4 sm:space-y-6'>
       <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
         <div>
-          <h1 className='text-2xl font-bold sm:text-3xl bg-gradient-to-r from-foreground to-company-green bg-clip-text text-transparent'>
-            User Management
-          </h1>
+          <h1 className='text-2xl font-bold sm:text-3xl'>User Management</h1>
           <p className='text-muted-foreground'>Manage users with location data</p>
         </div>
         <div className='flex items-center gap-2 sm:gap-3'>
@@ -150,7 +148,10 @@ export function UserList() {
             </Button>
           </div>
           {/* Add User Button */}
-          <Button onClick={() => setIsFormOpen(true)} className='flex-shrink-0 hover:bg-company-blue-hover transition-colors'>
+          <Button
+            onClick={() => setIsFormOpen(true)}
+            className='flex-shrink-0 hover:bg-company-blue-hover transition-colors'
+          >
             <Plus className='mr-2 h-4 w-4' />
             <span className='hidden sm:inline'>Add User</span>
             <span className='sm:hidden'>Add</span>

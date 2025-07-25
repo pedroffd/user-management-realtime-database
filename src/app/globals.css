@@ -155,23 +155,35 @@
   }
 }
 
-/* Sonner Toast Customization */
+/* Sonner Toast Customization - Using CSS Custom Properties */
+:root {
+  --success-bg: var(--company-green);
+  --success-border: var(--company-green-hover);
+  --success-text: white;
+}
+
+[data-theme="dark"] {
+  --success-bg: var(--company-green);
+  --success-border: var(--company-green-hover);
+  --success-text: white;
+}
+
 [data-sonner-toast][data-type="success"] {
-  background-color: var(--company-green) !important;
-  border-color: var(--company-green-hover) !important;
-  color: white !important;
+  background-color: var(--success-bg);
+  border-color: var(--success-border);
+  color: var(--success-text);
 }
 
 [data-sonner-toast][data-type="success"] [data-content] {
-  color: white !important;
+  color: var(--success-text);
 }
 
 [data-sonner-toast][data-type="success"] [data-close-button] {
-  background-color: rgba(255, 255, 255, 0.2) !important;
-  border-color: rgba(255, 255, 255, 0.3) !important;
-  color: white !important;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--success-text);
 }
 
 [data-sonner-toast][data-type="success"] [data-close-button]:hover {
-  background-color: rgba(255, 255, 255, 0.3) !important;
+  background-color: rgba(255, 255, 255, 0.3);
 }
