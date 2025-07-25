@@ -45,13 +45,20 @@
 
 :root {
   --radius: 0.625rem;
+  
+  /* Company Brand Colors */
+  --company-blue: #0054aa;
+  --company-green: #09b9b5;
+  --company-blue-hover: #003d7a;
+  --company-green-hover: #078a81;
+  
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
+  --primary: var(--company-blue);
   --primary-foreground: oklch(0.984 0.003 247.858);
   --secondary: oklch(0.968 0.007 247.896);
   --secondary-foreground: oklch(0.208 0.042 265.755);
@@ -85,8 +92,8 @@
   --card-foreground: oklch(0.984 0.003 247.858);
   --popover: oklch(0.208 0.042 265.755);
   --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
+  --primary: var(--company-blue);
+  --primary-foreground: oklch(0.984 0.003 247.858);
   --secondary: oklch(0.279 0.041 260.031);
   --secondary-foreground: oklch(0.984 0.003 247.858);
   --muted: oklch(0.279 0.041 260.031);
@@ -119,4 +126,52 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@layer utilities {
+  .text-company-blue {
+    color: var(--company-blue);
+  }
+  .text-company-green {
+    color: var(--company-green);
+  }
+  .bg-company-blue {
+    background-color: var(--company-blue);
+  }
+  .bg-company-green {
+    background-color: var(--company-green);
+  }
+  .border-company-blue {
+    border-color: var(--company-blue);
+  }
+  .border-company-green {
+    border-color: var(--company-green);
+  }
+  .hover\:bg-company-blue-hover:hover {
+    background-color: var(--company-blue-hover);
+  }
+  .hover\:bg-company-green-hover:hover {
+    background-color: var(--company-green-hover);
+  }
+}
+
+/* Sonner Toast Customization */
+[data-sonner-toast][data-type="success"] {
+  background-color: var(--company-green) !important;
+  border-color: var(--company-green-hover) !important;
+  color: white !important;
+}
+
+[data-sonner-toast][data-type="success"] [data-content] {
+  color: white !important;
+}
+
+[data-sonner-toast][data-type="success"] [data-close-button] {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+}
+
+[data-sonner-toast][data-type="success"] [data-close-button]:hover {
+  background-color: rgba(255, 255, 255, 0.3) !important;
 }
