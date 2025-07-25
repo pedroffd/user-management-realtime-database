@@ -148,7 +148,10 @@ export function UserList() {
             </Button>
           </div>
           {/* Add User Button */}
-          <Button onClick={() => setIsFormOpen(true)} className='flex-shrink-0'>
+          <Button
+            onClick={() => setIsFormOpen(true)}
+            className='flex-shrink-0 hover:bg-company-blue-hover transition-colors'
+          >
             <Plus className='mr-2 h-4 w-4' />
             <span className='hidden sm:inline'>Add User</span>
             <span className='sm:hidden'>Add</span>
