@@ -6,10 +6,16 @@ node_modules
 .env.production.local
 pnpm-lock.yaml
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
+/.pnp
 # dependencies
 /node_modules
-/.pnp
+serviceAccount.json
+# Firebase credentials and sensitive files
+*firebase*.json
+*service-account*.json
+*adminsdk*.json
+*credentials*.json
+*private-key*.json
 .pnp.*
 .yarn/*
 !.yarn/patches

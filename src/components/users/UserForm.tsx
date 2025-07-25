@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { Button } from '@/components/ui/button'
@@ -34,10 +35,25 @@ export function UserForm({ user, isOpen, onClose, onSubmit, isLoading }: UserFor
   const form = useForm<z.infer<typeof userSchema>>({
     resolver: zodResolver(userSchema),
     defaultValues: {
-      name: user?.name || '',
-      zipcode: user?.zipcode || '',
+      name: '',
+      zipcode: '',
     },
   })
+
+  // Update form values when user prop changes
+  useEffect(() => {
+    if (user) {
+      form.reset({
+        name: user.name,
+        zipcode: user.zipcode,
+      })
+    } else {
+      form.reset({
+        name: '',
+        zipcode: '',
+      })
+    }
+  }, [user, form])
 
   const handleSubmit = async (data: z.infer<typeof userSchema>) => {
     await onSubmit(data)
@@ -47,8 +63,13 @@ export function UserForm({ user, isOpen, onClose, onSubmit, isLoading }: UserFor
     }
   }
 
+  const handleClose = () => {
+    form.reset()
+    onClose()
+  }
+
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className='sm:max-w-[425px] mx-4 sm:mx-0'>
         <DialogHeader>
           <DialogTitle>{user ? 'Edit User' : 'Create User'}</DialogTitle>
@@ -85,7 +106,7 @@ export function UserForm({ user, isOpen, onClose, onSubmit, isLoading }: UserFor
               )}
             />
             <DialogFooter>
-              <Button type='button' variant='outline' onClick={onClose} disabled={isLoading}>
+              <Button type='button' variant='outline' onClick={handleClose} disabled={isLoading}>
                 Cancel
               </Button>
               <Button type='submit' disabled={isLoading}>

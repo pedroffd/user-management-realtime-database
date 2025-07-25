@@ -1,7 +1,7 @@
 'use client'
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Grid3x3, Plus, Table2 } from 'lucide-react'
+import { Grid3x3, Map as MapIcon, Plus, Table2 } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -13,12 +13,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { type CreateUserData, type UpdateUserData, type User, userService } from '@/services/userService'
+import { UserMap } from '../map/UserMap'
 import { UserCard } from './UserCard'
 import { UserForm } from './UserForm'
 import { UserTable } from './UserTable'
 
-type ViewMode = 'cards' | 'table'
+type ViewMode = 'cards' | 'table' | 'map'
 
 export function UserList() {
   const [viewMode, setViewMode] = useState<ViewMode>('cards')
@@ -113,6 +115,8 @@ export function UserList() {
           <p className='text-muted-foreground'>Manage users with location data</p>
         </div>
         <div className='flex items-center gap-2 sm:gap-3'>
+          {/* Theme Toggle */}
+          <ThemeToggle />
           {/* View Toggle */}
           <div className='flex rounded-md border'>
             <Button
@@ -128,14 +132,26 @@ export function UserList() {
               variant={viewMode === 'table' ? 'default' : 'ghost'}
               size='sm'
               onClick={() => setViewMode('table')}
-              className='rounded-l-none px-2 sm:px-3'
+              className='rounded-none px-2 sm:px-3'
             >
               <Table2 className='h-4 w-4' />
               <span className='ml-1 hidden sm:inline'>Table</span>
             </Button>
+            <Button
+              variant={viewMode === 'map' ? 'default' : 'ghost'}
+              size='sm'
+              onClick={() => setViewMode('map')}
+              className='rounded-l-none px-2 sm:px-3'
+            >
+              <MapIcon className='h-4 w-4' />
+              <span className='ml-1 hidden sm:inline'>Map</span>
+            </Button>
           </div>
           {/* Add User Button */}
-          <Button onClick={() => setIsFormOpen(true)} className='flex-shrink-0'>
+          <Button
+            onClick={() => setIsFormOpen(true)}
+            className='flex-shrink-0 hover:bg-company-blue-hover transition-colors'
+          >
             <Plus className='mr-2 h-4 w-4' />
             <span className='hidden sm:inline'>Add User</span>
             <span className='sm:hidden'>Add</span>
@@ -169,8 +185,10 @@ export function UserList() {
             <UserCard key={user.id} user={user} onEdit={handleEdit} onDelete={handleDeleteClick} />
           ))}
         </div>
-      ) : (
+      ) : viewMode === 'table' ? (
         <UserTable users={users} onEdit={handleEdit} onDelete={handleDeleteClick} />
+      ) : (
+        <UserMap users={users} onUserClick={handleEdit} />
       )}
 
       <UserForm
