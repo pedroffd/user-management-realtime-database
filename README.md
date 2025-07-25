@@ -6,8 +6,11 @@ A modern, full-stack user management application built with Next.js, featuring C
 
 - ✅ **Complete CRUD Operations** - Create, Read, Update, Delete users
 - ✅ **Location Data Integration** - Automatic latitude, longitude, and timezone fetching via OpenWeather API
+- ✅ **Google Maps Integration** - Interactive map view with user markers and info windows
+- ✅ **Multiple View Modes** - Cards, Table, and Map visualization options
 - ✅ **Firebase Realtime Database** - NoSQL database for data storage
 - ✅ **Modern UI** - Built with shadcn/ui components and Tailwind CSS
+- ✅ **Dark Mode Support** - System, light, and dark theme options
 - ✅ **Form Validation** - Zod schema validation with React Hook Form
 - ✅ **Real-time Updates** - React Query for optimistic updates and caching
 - ✅ **TypeScript** - Full type safety throughout the application
@@ -24,6 +27,7 @@ A modern, full-stack user management application built with Next.js, featuring C
 - **React Query** - Server state management
 - **React Hook Form** - Form handling
 - **Zod** - Schema validation
+- **Google Maps JavaScript API** - Interactive maps and markers
 - **Lucide React** - Icons
 
 ### Backend (App Router API Routes)
@@ -56,6 +60,7 @@ Each user contains:
 - Yarn package manager
 - Firebase project with Realtime Database
 - OpenWeather API key
+- Google Maps API key with Maps JavaScript API enabled
 
 ### Installation
 
@@ -73,6 +78,7 @@ cp env.example.txt .env.local
 
 # Edit .env.local with your credentials:
 OPENWEATHER_API_KEY=your_api_key_here
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
 FIREBASE_DATABASE_URL=https://your-project-default-rtdb.firebaseio.com/
 
 # For production (optional):
@@ -93,7 +99,17 @@ gcloud auth application-default login
 - Download service account JSON from Firebase Console
 - Add the credentials to your .env.local file
 
-4. **Run the development server:**
+4. **Google Maps API Setup:**
+- Go to [Google Cloud Console](https://console.cloud.google.com/)
+- Enable the **Maps JavaScript API**
+- Create an API key and restrict it to your domain(s)
+- Add the API key to your `.env.local` file
+- **Important:** Configure API key restrictions for security:
+  - Application restrictions: HTTP referrers (websites)
+  - Add your domains: `localhost:3000/*` and your production domain
+  - API restrictions: Limit to Maps JavaScript API
+
+5. **Run the development server:**
 ```bash
 yarn dev
 ```
@@ -115,6 +131,28 @@ Open [http://localhost:3000](http://localhost:3000) to see the application.
 - `PUT /api/users/[id]` - Update user
 - `DELETE /api/users/[id]` - Delete user
 
+## 🗺️ Google Maps Features
+
+### Interactive Map View
+- **View Toggle**: Switch between Cards, Table, and Map views
+- **User Markers**: Each user appears as a blue pin on the map
+- **Info Windows**: Click markers to see user details (name, zipcode, coordinates, timezone)
+- **Auto-centering**: Map automatically adjusts to show all users
+- **Bounds Fitting**: Intelligent zoom based on user distribution
+- **Edit Integration**: Click markers to open user edit modal
+
+### Map Components
+- **MapView**: Base Google Maps component with loading/error states
+- **UserMap**: Specialized component for displaying user markers
+- **Custom Markers**: Company-branded blue location pins
+- **Responsive Design**: Optimized for both desktop and mobile
+
+### Technical Implementation
+- Uses `@googlemaps/js-api-loader` for optimized API loading
+- Type-safe integration with `@types/google.maps`
+- Real-time marker updates when users are created/edited/deleted
+- Leverages existing latitude/longitude data from OpenWeather API
+
 ## 🚀 Deployment
 
 ### Vercel (Recommended)
@@ -130,6 +168,7 @@ git push origin main
    - Connect your GitHub repo to Vercel
    - Add environment variables in Vercel dashboard:
      - `OPENWEATHER_API_KEY`
+     - `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`
      - `FIREBASE_DATABASE_URL`
      - `FIREBASE_PROJECT_ID` (for production)
      - `FIREBASE_CLIENT_EMAIL` (for production)
