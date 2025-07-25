@@ -13,6 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { type CreateUserData, type UpdateUserData, type User, userService } from '@/services/userService'
 import { UserCard } from './UserCard'
 import { UserForm } from './UserForm'
@@ -113,6 +114,8 @@ export function UserList() {
           <p className='text-muted-foreground'>Manage users with location data</p>
         </div>
         <div className='flex items-center gap-2 sm:gap-3'>
+          {/* Theme Toggle */}
+          <ThemeToggle />
           {/* View Toggle */}
           <div className='flex rounded-md border'>
             <Button
