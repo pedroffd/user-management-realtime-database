@@ -13,7 +13,7 @@ interface UserCardProps {
 
 export function UserCard({ user, onEdit, onDelete }: UserCardProps) {
   return (
-    <Card className='w-full hover:shadow-md transition-shadow'>
+    <Card className='w-full hover:shadow-md hover:border-company-green/30 transition-all duration-200'>
       <CardHeader className='pb-3'>
         <CardTitle className='text-lg leading-tight break-words'>{user.name}</CardTitle>
         <CardDescription className='text-xs text-muted-foreground truncate'>ID: {user.id}</CardDescription>
