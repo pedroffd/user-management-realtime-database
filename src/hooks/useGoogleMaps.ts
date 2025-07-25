@@ -1,6 +1,6 @@
 'use client'
 
-import { Loader, type Library } from '@googlemaps/js-api-loader'
+import { type Library, Loader } from '@googlemaps/js-api-loader'
 import { useEffect, useState } from 'react'
 
 interface UseGoogleMapsOptions {
@@ -39,4 +39,4 @@ export function useGoogleMaps(options: UseGoogleMapsOptions = {}) {
   }, [options.libraries])
 
   return { isLoaded, loadError }
-} 
+}

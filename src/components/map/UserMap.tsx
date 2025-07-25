@@ -1,8 +1,8 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { MapView } from './MapView'
 import type { User } from '@/services/userService'
+import { MapView } from './MapView'
 
 interface UserMapProps {
   users: User[]
@@ -30,7 +30,7 @@ export function UserMap({ users, onUserClick, className }: UserMapProps) {
   // Handle map load
   const handleMapLoad = useCallback((mapInstance: google.maps.Map) => {
     setMap(mapInstance)
-    
+
     // Create info window
     infoWindowRef.current = new google.maps.InfoWindow()
   }, [])
@@ -40,7 +40,7 @@ export function UserMap({ users, onUserClick, className }: UserMapProps) {
     if (!map || !users.length) return
 
     const currentMarkers = markersRef.current
-    const userIds = new Set(users.map(user => user.id))
+    const userIds = new Set(users.map((user) => user.id))
 
     // Remove markers for users that no longer exist
     for (const [userId, marker] of currentMarkers.entries()) {
@@ -51,7 +51,7 @@ export function UserMap({ users, onUserClick, className }: UserMapProps) {
     }
 
     // Add or update markers for current users
-    users.forEach(user => {
+    users.forEach((user) => {
       let marker = currentMarkers.get(user.id)
 
       if (!marker) {
@@ -61,7 +61,9 @@ export function UserMap({ users, onUserClick, className }: UserMapProps) {
           map,
           title: user.name,
           icon: {
-            url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+            url:
+              'data:image/svg+xml;charset=UTF-8,' +
+              encodeURIComponent(`
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#3B82F6"/>
               </svg>
@@ -86,7 +88,7 @@ export function UserMap({ users, onUserClick, className }: UserMapProps) {
                 </div>
               </div>
             `
-            
+
             infoWindowRef.current.setContent(content)
             infoWindowRef.current.open(map, marker)
           }
@@ -100,11 +102,7 @@ export function UserMap({ users, onUserClick, className }: UserMapProps) {
       } else {
         // Update existing marker position if needed
         const currentPos = marker.getPosition()
-        if (
-          !currentPos ||
-          currentPos.lat() !== user.latitude ||
-          currentPos.lng() !== user.longitude
-        ) {
+        if (!currentPos || currentPos.lat() !== user.latitude || currentPos.lng() !== user.longitude) {
           marker.setPosition({ lat: user.latitude, lng: user.longitude })
         }
       }
@@ -113,11 +111,11 @@ export function UserMap({ users, onUserClick, className }: UserMapProps) {
     // Fit map bounds to show all markers
     if (users.length > 1) {
       const bounds = new google.maps.LatLngBounds()
-      users.forEach(user => {
+      users.forEach((user) => {
         bounds.extend({ lat: user.latitude, lng: user.longitude })
       })
       map.fitBounds(bounds)
-      
+
       // Add padding
       const padding = { top: 50, right: 50, bottom: 50, left: 50 }
       map.fitBounds(bounds, padding)
@@ -127,7 +125,7 @@ export function UserMap({ users, onUserClick, className }: UserMapProps) {
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      markersRef.current.forEach(marker => marker.setMap(null))
+      markersRef.current.forEach((marker) => marker.setMap(null))
       markersRef.current.clear()
     }
   }, [])
@@ -140,4 +138,4 @@ export function UserMap({ users, onUserClick, className }: UserMapProps) {
       className={className || 'w-full h-[600px] rounded-lg border'}
     />
   )
-} 
+}

@@ -15,10 +15,10 @@ import {
 } from '@/components/ui/dialog'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { type CreateUserData, type UpdateUserData, type User, userService } from '@/services/userService'
+import { UserMap } from '../map/UserMap'
 import { UserCard } from './UserCard'
 import { UserForm } from './UserForm'
 import { UserTable } from './UserTable'
-import { UserMap } from '../map/UserMap'
 
 type ViewMode = 'cards' | 'table' | 'map'
 

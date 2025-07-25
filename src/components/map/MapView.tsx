@@ -10,11 +10,11 @@ interface MapViewProps {
   onMapLoad?: (map: google.maps.Map) => void
 }
 
-export function MapView({ 
+export function MapView({
   center = { lat: -23.5505, lng: -46.6333 }, // São Paulo default
   zoom = 10,
   className = 'w-full h-96',
-  onMapLoad
+  onMapLoad,
 }: MapViewProps) {
   const mapRef = useRef<HTMLDivElement>(null)
   const mapInstanceRef = useRef<google.maps.Map | null>(null)
@@ -61,4 +61,4 @@ export function MapView({
   }
 
   return <div ref={mapRef} className={className} />
-} 
+}
