@@ -1,7 +1,7 @@
 'use client'
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Grid3x3, Plus, Table2 } from 'lucide-react'
+import { Grid3x3, Map as MapIcon, Plus, Table2 } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -15,11 +15,12 @@ import {
 } from '@/components/ui/dialog'
 import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { type CreateUserData, type UpdateUserData, type User, userService } from '@/services/userService'
+import { UserMap } from '../map/UserMap'
 import { UserCard } from './UserCard'
 import { UserForm } from './UserForm'
 import { UserTable } from './UserTable'
 
-type ViewMode = 'cards' | 'table'
+type ViewMode = 'cards' | 'table' | 'map'
 
 export function UserList() {
   const [viewMode, setViewMode] = useState<ViewMode>('cards')
@@ -131,10 +132,19 @@ export function UserList() {
               variant={viewMode === 'table' ? 'default' : 'ghost'}
               size='sm'
               onClick={() => setViewMode('table')}
-              className='rounded-l-none px-2 sm:px-3'
+              className='rounded-none px-2 sm:px-3'
             >
               <Table2 className='h-4 w-4' />
               <span className='ml-1 hidden sm:inline'>Table</span>
+            </Button>
+            <Button
+              variant={viewMode === 'map' ? 'default' : 'ghost'}
+              size='sm'
+              onClick={() => setViewMode('map')}
+              className='rounded-l-none px-2 sm:px-3'
+            >
+              <MapIcon className='h-4 w-4' />
+              <span className='ml-1 hidden sm:inline'>Map</span>
             </Button>
           </div>
           {/* Add User Button */}
@@ -172,8 +182,10 @@ export function UserList() {
             <UserCard key={user.id} user={user} onEdit={handleEdit} onDelete={handleDeleteClick} />
           ))}
         </div>
-      ) : (
+      ) : viewMode === 'table' ? (
         <UserTable users={users} onEdit={handleEdit} onDelete={handleDeleteClick} />
+      ) : (
+        <UserMap users={users} onUserClick={handleEdit} />
       )}
 
       <UserForm
