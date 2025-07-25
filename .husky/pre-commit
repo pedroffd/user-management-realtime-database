@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Running code quality checks..."
+yarn biome
+
+echo "🏗️ Building application..."
+yarn build
+
+echo "✅ Pre-commit checks passed!" 
